@@ -1,3 +1,3 @@
 # VPVA-Dashboard-Design
-Drag file into folder
+Drag file onto browser
 Click ok 3 times
