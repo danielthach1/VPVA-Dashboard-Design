@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Novel Designer Dashboard</title>
+    <style>
+        :root {
+            --primary: #4a4e69;
+            --secondary: #9a8c98;
+            --accent: #c9ada7;
+            --background: #f2e9e4;
+            --text: #22223b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--secondary);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .asset-library, .templates, .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .asset, .template, .project {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .asset img, .template img, .project img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        #scene-editor {
+            display: none;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .resource-item h3 {
+            margin-top: 0;
+        }
+
+        .resource-item ul {
+            padding-left: 20px;
+        }
+
+        .resource-item .btn {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Visual Novel Designer</h2>
+            <button class="btn" onclick="showSection('projects')">Projects</button>
+            <button class="btn" onclick="showSection('scene-editor')">Scene Editor</button>
+            <button class="btn" onclick="showSection('asset-library')">Asset Library</button>
+            <button class="btn" onclick="showSection('templates')">Templates</button>
+            <button class="btn" onclick="showSection('resources')">Resources</button>
+        </div>
+        <div class="main-content">
+            <div id="projects">
+                <h1>Projects</h1>
+                <button class="btn" onclick="createNewProject()">Create New Project</button>
+                <div class="projects">
+                    <!-- Project items will be dynamically added here -->
+                </div>
+            </div>
+            <div id="scene-editor" style="display: none;">
+                <h1>Scene Editor</h1>
+                <table id="scene-table">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Dialogue</th>
+                            <th>Background</th>
+                            <th>Options</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Scene rows will be dynamically added here -->
+                    </tbody>
+                </table>
+                <button class="btn" onclick="addSceneRow()">Add Scene</button>
+            </div>
+            <div id="asset-library" style="display: none;">
+                <h1>Asset Library</h1>
+                <button class="btn" onclick="uploadAsset()">Upload Asset</button>
+                <div class="asset-library">
+                    <!-- Asset items will be dynamically added here -->
+                </div>
+            </div>
+            <div id="templates" style="display: none;">
+                <h1>Templates</h1>
+                <div class="templates">
+                    <!-- Template items will be dynamically added here -->
+                </div>
+            </div>
+            <div id="resources" style="display: none;">
+                <h1>Resources</h1>
+                <div class="resources-grid">
+                    <div class="resource-item">
+                        <h3>Tutorials</h3>
+                        <ul>
+                            <li><a href="#">Getting Started with Visual Novel Designer</a></li>
+                            <li><a href="#">Advanced Scene Creation Techniques</a></li>
+                            <li><a href="#">Character Development Guide</a></li>
+                        </ul>
+                    </div>
+                    <div class="resource-item">
+                        <h3>About</h3>
+                        <p>Visual Novel Designer is a powerful tool for creating interactive stories. Learn more about our features and the team behind the project.</p>
+                        <a href="#" class="btn">Read More</a>
+                    </div>
+                    <div class="resource-item">
+                        <h3>Help & Support</h3>
+                        <p>Need assistance? Our support team is here to help!</p>
+                        <a href="#" class="btn">Contact Support</a>
+                    </div>
+                    <div class="resource-item">
+                        <h3>Community Forum</h3>
+                        <p>Join our vibrant community to share ideas, get feedback, and collaborate with other visual novel creators.</p>
+                        <a href="#" class="btn">Visit Forum</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = ['projects', 'scene-editor', 'asset-library', 'templates', 'resources'];
+            sections.forEach(section => {
+                document.getElementById(section).style.display = section === sectionId ? 'block' : 'none';
+            });
+        }
+
+        function createNewProject() {
+            const projectName = prompt("Enter project name:");
+            if (projectName) {
+                const projectsContainer = document.querySelector('.projects');
+                const projectElement = document.createElement('div');
+                projectElement.className = 'project';
+                projectElement.innerHTML = `
+                    <img src="/placeholder.svg?height=100&width=150" alt="${projectName}">
+                    <p>${projectName}</p>
+                    <button class="btn" onclick="editProject('${projectName}')">Edit</button>
+                    <button class="btn" onclick="deleteProject('${projectName}')">Delete</button>
+                `;
+                projectsContainer.appendChild(projectElement);
+            }
+        }
+
+        function editProject(projectName) {
+            alert(`Editing project: ${projectName}`);
+            showSection('scene-editor');
+        }
+
+        function deleteProject(projectName) {
+            if (confirm(`Are you sure you want to delete ${projectName}?`)) {
+                // Delete project logic here
+                alert(`Project ${projectName} deleted`);
+            }
+        }
+
+        function addSceneRow() {
+            const tableBody = document.querySelector('#scene-table tbody');
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Character name"></td>
+                <td><textarea placeholder="Dialogue"></textarea></td>
+                <td><select><option>Background 1</option><option>Background 2</option></select></td>
+                <td><input type="text" placeholder="Option 1, Option 2"></td>
+                <td>
+                    <button class="btn" onclick="editScene(this)">Edit</button>
+                    <button class="btn" onclick="deleteScene(this)">Delete</button>
+                </td>
+            `;
+        }
+
+        function editScene(button) {
+            alert('Editing scene');
+        }
+
+        function deleteScene(button) {
+            if (confirm('Are you sure you want to delete this scene?')) {
+                button.closest('tr').remove();
+            }
+        }
+
+        function uploadAsset() {
+            alert('Asset upload functionality would be implemented here');
+            // Simulating asset upload
+            const assetLibrary = document.querySelector('.asset-library');
+            const assetElement = document.createElement('div');
+            assetElement.className = 'asset';
+            assetElement.innerHTML = `
+                <img src="/placeholder.svg?height=100&width=100" alt="New Asset">
+                <p>New Asset</p>
+                <button class="btn" onclick="deleteAsset(this)">Delete</button>
+            `;
+            assetLibrary.appendChild(assetElement);
+        }
+
+        function deleteAsset(button) {
+            if (confirm('Are you sure you want to delete this asset?')) {
+                button.closest('.asset').remove();
+            }
+        }
+
+        // Initialize with some sample data
+        function initializeDashboard() {
+            // Add sample projects
+            ['My First VN', 'Sci-Fi Adventure', 'Romance Story'].forEach(createNewProject);
+
+            // Add sample assets
+            const assetLibrary = document.querySelector('.asset-library');
+            ['Character 1', 'Character 2', 'Background 1', 'Background 2'].forEach(assetName => {
+                const assetElement = document.createElement('div');
+                assetElement.className = 'asset';
+                assetElement.innerHTML = `
+                    <img src="/placeholder.svg?height=100&width=100" alt="${assetName}">
+                    <p>${assetName}</p>
+                    <button class="btn" onclick="deleteAsset(this)">Delete</button>
+                `;
+                assetLibrary.appendChild(assetElement);
+            });
+
+            // Add sample templates
+            const templates = document.querySelector('.templates');
+            ['Romance', 'Mystery', 'Fantasy'].forEach(templateName => {
+                const templateElement = document.createElement('div');
+                templateElement.className = 'template';
+                templateElement.innerHTML = `
+                    <img src="/placeholder.svg?height=100&width=150" alt="${templateName} Template">
+                    <p>${templateName} Template</p>
+                    <button class="btn" onclick="useTemplate('${templateName}')">Use</button>
+                `;
+                templates.appendChild(templateElement);
+            });
+
+            // Add sample scene
+            addSceneRow();
+        }
+
+        function useTemplate(templateName) {
+            alert(`Using ${templateName} template`);
+            showSection('scene-editor');
+        }
+
+        // Call initialization function when the page loads
+        window.onload = initializeDashboard;
+    </script>
+</body>
+</html>
