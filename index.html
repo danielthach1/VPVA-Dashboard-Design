@@ -149,10 +149,29 @@
                 <table id="scene-table">
                     <thead>
                         <tr>
-                            <th>Character</th>
-                            <th>Dialogue</th>
+                            <th>ID</th>
+                            <th>Speaker</th>
+                            <th>Line</th>
+                            <th>KeyWord</th>
+                            <th>SoundEFX</th>
+                            <th>LeftSideSpeaker</th>
+                            <th>RightSideSpeaker</th>
+                            <th>Prop</th>
                             <th>Background</th>
-                            <th>Options</th>
+                            <th>Checkpoint</th>
+                            <th>Type</th>
+                            <th>GoToID</th>
+                            <th>Effect</th>
+                            <th>A1Answer</th>
+                            <th>GoToIDA1</th>
+                            <th>EffectA1</th>
+                            <th>A2Answer</th>
+                            <th>GoToIDA2</th>
+                            <th>EffectA2</th>
+                            <th>A3Answer</th>
+                            <th>GotToIDA3</th>
+                            <th>EffectA3</th>
+                            <th>EntryPoint</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -246,10 +265,33 @@
             const tableBody = document.querySelector('#scene-table tbody');
             const newRow = tableBody.insertRow();
             newRow.innerHTML = `
-                <td><input type="text" placeholder="Character name"></td>
-                <td><textarea placeholder="Dialogue"></textarea></td>
-                <td><select><option>Background 1</option><option>Background 2</option></select></td>
-                <td><input type="text" placeholder="Option 1, Option 2"></td>
+                <td><input type="text" placeholder="ID"></td>
+                <td><input type="text" placeholder="Speaker"></td>
+                <td><textarea placeholder="Line"></textarea></td>
+                <td><input type="text" placeholder="KeyWord"></td>
+                <td><input type="text" placeholder="SoundEFX"></td>
+                <td><input type="text" placeholder="LeftSideSpeaker"></td>
+                <td><input type="text" placeholder="RightSideSpeaker"></td>
+                <td><input type="text" placeholder="Prop"></td>
+                <td><input type="text" placeholder="Background"></td>
+                <td><input type="checkbox"></td>
+                <td><select>
+                    <option>Dialogue</option>
+                    <option>Choice</option>
+                    <option>End</option>
+                </select></td>
+                <td><input type="text" placeholder="GoToID"></td>
+                <td><input type="text" placeholder="Effect"></td>
+                <td><input type="text" placeholder="A1Answer"></td>
+                <td><input type="text" placeholder="GoToIDA1"></td>
+                <td><input type="text" placeholder="EffectA1"></td>
+                <td><input type="text" placeholder="A2Answer"></td>
+                <td><input type="text" placeholder="GoToIDA2"></td>
+                <td><input type="text" placeholder="EffectA2"></td>
+                <td><input type="text" placeholder="A3Answer"></td>
+                <td><input type="text" placeholder="GotToIDA3"></td>
+                <td><input type="text" placeholder="EffectA3"></td>
+                <td><input type="checkbox"></td>
                 <td>
                     <button class="btn" onclick="editScene(this)">Edit</button>
                     <button class="btn" onclick="deleteScene(this)">Delete</button>
